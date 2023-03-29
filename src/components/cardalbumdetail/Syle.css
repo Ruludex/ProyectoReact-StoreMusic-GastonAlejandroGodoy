@@ -1,0 +1,28 @@
+h5 {
+    font-size: 20px;
+    text-align: center; 
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+h6 {
+    font-size: 14px;
+    color: aliceblue;
+}
+
+p {
+    font-size: 15   px;
+    font-family:cursive;
+}
+
+h4 {
+    color: rgb(60, 255, 0);
+}
+
+button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    background-color: rgb(71, 71, 240);
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+}

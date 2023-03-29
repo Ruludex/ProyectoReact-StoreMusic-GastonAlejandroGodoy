@@ -1,0 +1,10 @@
+.icon {
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+}
+
+.cart-count {
+    display: flex;
+    display: inline;
+    font-size: 20px;
+}
