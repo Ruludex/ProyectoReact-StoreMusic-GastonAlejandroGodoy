@@ -8,3 +8,11 @@
     display: inline;
     font-size: 20px;
 }
+
+.img-carrito{
+    max-width: 200px;
+    margin-right: 10px;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}

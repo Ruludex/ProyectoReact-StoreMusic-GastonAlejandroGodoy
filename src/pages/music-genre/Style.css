@@ -1,5 +1,5 @@
 .caja {
-    display: inline-block;
+    display: block;
     justify-content: center;
     border: 4px solid rgb(0, 0, 0);
     margin: 20px 10px;
@@ -8,4 +8,5 @@
 .contenedor-padre {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
