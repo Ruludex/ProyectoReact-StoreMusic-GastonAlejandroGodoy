@@ -7,6 +7,12 @@ const CardAlbum = ({ dataAlbum }) => {
   const { cartItems, setCartItems } = useContext(ItemsContext);
 
   function agregarProducto(dataAlbum) {
+    console.log(dataAlbum.id)
+    const itemExists = cartItems.find(item => item.id === dataAlbum.id);
+    if (itemExists) {
+      // El producto ya está en el carrito, realiza la acción que desees
+      return;
+    }
     setCartItems([...cartItems, dataAlbum]);
   }
 

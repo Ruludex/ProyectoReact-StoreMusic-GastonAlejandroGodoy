@@ -10,15 +10,21 @@ const MusicGenre = () => {
   const filteredAlbums = albumsData.filter(album => album.genero === genero);
   const { cartItems, setCartItems } = useContext(ItemsContext);
   function agregarProducto(dataAlbum) {
+    console.log(dataAlbum.id)
+    const itemExists = cartItems.find(item => item.id === dataAlbum.id);
+    if (itemExists) {
+      // El producto ya está en el carrito, realiza la acción que desees
+      return;
+    }
     setCartItems([...cartItems, dataAlbum]);
   }
   return (
     <div>
       <h1>Detalles de los álbums</h1>
-      <ul class="contenedor-padre">
+      <ul className="contenedor-padre">
         {filteredAlbums.map((album) => (
-        <div className="caja">
-        <div className="card" key={album.id}>
+        <div key={album.id} className="caja">
+          <div className="card">
           <Link className="link" to={`/detalles/${album.id}`}>
             <div className="contenedor-img">
               <img className="img" src={album.img} alt={album.album} />
