@@ -28,7 +28,7 @@ const Contact = (e) => {
     };
 
     return (
-    <div className='flex-container'>                
+    <div className='flex-container-contact'>                
         <form className="row" onSubmit={handleOnSubmit}>
             <div className="col-6">
                 <label htmlFor="name" className="form-label">Nombres:</label>

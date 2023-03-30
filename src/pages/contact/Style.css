@@ -19,9 +19,13 @@
     padding: 15px;
 }
 
-.flex-container {
-    padding: 30px;
+.flex-container-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
+
 
 p {
     font-size: 20px;

@@ -1,37 +1,48 @@
-import React from 'react'
-import CardAlbum from '../../components/cardalbum/CardAlbum';
-import { db } from '../../firebase/FirebaseConfig';
-import { collection,query,getDocs,where } from 'firebase/firestore';
-import { useEffect,useState } from 'react';
-import { useParams } from "react-router-dom";
-
+import React, { useContext } from "react";
+import { useParams } from 'react-router-dom';
+import { ItemsContext } from "../../ItemContext";
+import { Link } from "react-router-dom";
+import "./Style.css"
 
 const MusicGenre = () => {
-    const [albumsData,setAlbumData] = useState ([]);
-    const { genero } = useParams();
-    useEffect( () => {
-        const getAlbums = async () => {
-            const q = query(collection(db,"music"), where("genero","==",genero));
-            const querySnapshot = await getDocs (q);
-            const docs = []
-            querySnapshot.forEach ((doc) => {
-                docs.push({...doc.data(),id:doc.id})
-            } );
-            setAlbumData(docs);
-        }
-        getAlbums();
-    } , [genero] )
-
-    return (
-        <div>
-        <h1>{genero[0].toUpperCase()+genero.slice(1)}</h1>
-        <div className='flex-container'>
-            {albumsData.map((albums) => {
-                return	<CardAlbum key={albums.id} dataAlbum={albums}/>
-            })}
+  const { albumsData } = useContext(ItemsContext);
+  const { genero } = useParams();
+  const filteredAlbums = albumsData.filter(album => album.genero === genero);
+  const { cartItems, setCartItems } = useContext(ItemsContext);
+  function agregarProducto(dataAlbum) {
+    setCartItems([...cartItems, dataAlbum]);
+  }
+  return (
+    <div>
+      <h1>Detalles de los álbums</h1>
+      <ul class="contenedor-padre">
+        {filteredAlbums.map((album) => (
+        <div className="caja">
+        <div className="card" key={album.id}>
+          <Link className="link" to={`/detalles/${album.id}`}>
+            <div className="contenedor-img">
+              <img className="img" src={album.img} alt={album.album} />
+            </div>
+            <div>
+              <h2>{album.artista}</h2>
+              <h3>Album: {album.album}</h3>
+              <h3>Precio: {album.precio}</h3>
+            </div>
+          </Link>
+          <button
+          onClick={() => {
+            agregarProducto(album);
+          }}
+        >
+          Comprar
+        </button>
         </div>
+      </div>
+        ))}
+      </ul>
     </div>
-)
-}
+  );
+};
 
-export default MusicGenre
+export default MusicGenre;
+

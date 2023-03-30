@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { collection,query,getDocs,where,documentId } from 'firebase/firestore';
 import { db } from "../../firebase/FirebaseConfig";
 import CartBuy from "../cartbuy/cartBuy";
-import "./Syle.css"
+import "./Style.css"
 
 const CardAlbumDetail = () => {
   const { id } = useParams();
@@ -26,7 +26,7 @@ const CardAlbumDetail = () => {
     {albumData.map((album) => {
         return <CartBuy key={album.id} Album={album}/>   
     })}
-</div>
+    </div>
   )
 }
 export default CardAlbumDetail

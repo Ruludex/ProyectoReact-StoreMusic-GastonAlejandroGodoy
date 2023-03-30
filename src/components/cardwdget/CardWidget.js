@@ -5,7 +5,7 @@ import "./Style.css";
 import { ItemsContext } from "../../ItemContext";
 
 function ModalItem(props) {
-  const { id, img, artista, precio } = props;
+  const { id, img, artista, precio, album } = props;
   const { cartItems, setCartItems } = useContext(ItemsContext);
 
   function eliminarProducto(id) {
@@ -14,7 +14,7 @@ function ModalItem(props) {
 
   return (
     <div className="modal-contenedor">
-      <img className="img-carrito" src={img} />
+      <img className="img-carrito" src={img} alt={album}/>
       <div>
         <p>Artista: {artista}</p>
         <p>Precio: ${precio}</p>

@@ -5,7 +5,7 @@ import "./Style.css";
 
 const Store = () => {
   const items = useContext(ItemsContext);
-
+  console.log(items)
   return (
     <div>
       <h1>Discos</h1>
