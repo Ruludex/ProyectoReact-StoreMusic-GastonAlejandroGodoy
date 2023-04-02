@@ -44,7 +44,7 @@ function ModalItem(props) {
 
 const CardWidget = ({ dataAlbum }) => {
   const { cartItems } = useContext(ItemsContext);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalPrice] = useState(0);
 
   function calcularTotal() {
     let total = 0;

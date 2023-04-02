@@ -6,48 +6,32 @@ import { ItemsContext } from "../../ItemContext";
 const CardAlbum = ({ dataAlbum }) => {
   const { cartItems, setCartItems, totalPrice, setTotalPrice } = useContext(ItemsContext);
 
-  function agregarProducto(dataAlbum) {
-    console.log("Ejecutando agregarProducto con el siguiente objeto dataAlbum: ", dataAlbum);
-  
-    const itemExists = cartItems.find(item => item.id === dataAlbum.id);
+  const itemExists = cartItems.find(item => item.id === dataAlbum.id);
+
+  const actualizarCantidad = (item) => {
+    console.log(`Actualizando cantidad del producto ${dataAlbum.album}`);
+    const updatedItem = { ...item, cantidad: item.cantidad + 1 };
+    setTotalPrice(totalPrice + item.precio);
+    return updatedItem;
+  };
+
+  const agregarNuevoProducto = () => {
+    console.log(`Agregando nuevo producto ${dataAlbum.album} al carrito`);
+    const newItem = { id: dataAlbum.id, artista: dataAlbum.artista, album: dataAlbum.album, precio: dataAlbum.precio, img: dataAlbum.img, cantidad: 1 };
+    setCartItems([...cartItems, newItem]);
+    setTotalPrice(totalPrice + dataAlbum.precio);
+  };
+
+  const agregarProducto = () => {
     if (itemExists) {
       console.log(`El producto ${dataAlbum.album} ya está en el carrito`);
-  
-      const updatedItems = cartItems.map(item => {
-        if (item.id === dataAlbum.id) {
-          console.log(`Actualizando cantidad del producto ${dataAlbum.album}`);
-          const updatedItem = { ...item, cantidad: item.cantidad + 1 };
-          if (updatedItem.cantidad === 0) { // si la cantidad se reduce a 0, restar el precio del producto existente al precio total
-            setTotalPrice(totalPrice * itemExists.cantidad);
-          } else {
-            setTotalPrice(totalPrice * itemExists.cantidad);
-          }
-          return updatedItem;
-        } else {
-          return item;
-        }
-      });
+      const updatedItems = cartItems.map(item => (item.id === dataAlbum.id) ? actualizarCantidad(item) : item);
       setCartItems(updatedItems);
     } else {
-      console.log(`Agregando nuevo producto ${dataAlbum.album} al carrito`);
-  
-      const newItem = { id: dataAlbum.id, artista: dataAlbum.artista, album: dataAlbum.album, precio: dataAlbum.precio, img: dataAlbum.img, cantidad: 1 };
-      setCartItems([...cartItems, newItem]);
-      setTotalPrice(totalPrice + dataAlbum.precio);
+      agregarNuevoProducto();
     }
-    // Si no hay elementos en el carrito, setear el precio total a 0
-    if (cartItems.length === 0) {
-      console.log("No hay elementos en el carrito, el precio total se setea a 0");
-      setTotalPrice(0);
-    }
-    console.log("Resultado final de cartItems: ", cartItems);
-    console.log("Precio total actual: ", totalPrice);
-  }
+  };
   
-  
-  
-  
-
   return (
     <div className="caja">
       <div className="card">
@@ -61,7 +45,7 @@ const CardAlbum = ({ dataAlbum }) => {
             <h3>Precio: {dataAlbum.precio}</h3>
           </div>
         </Link>
-        <button onClick={() => agregarProducto(dataAlbum)}>Comprar</button>
+        <button onClick={agregarProducto}>Comprar</button>
       </div>
     </div>
   );

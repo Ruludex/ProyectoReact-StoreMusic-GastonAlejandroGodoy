@@ -4,20 +4,35 @@ import { ItemsContext } from "../../ItemContext";
 import { Link } from "react-router-dom";
 import "./Style.css"
 
-const MusicGenre = () => {
+const MusicGenre = ({dataAlbum}) => {
   const { albumsData } = useContext(ItemsContext);
   const { genero } = useParams();
   const filteredAlbums = albumsData.filter(album => album.genero === genero);
-  const { cartItems, setCartItems } = useContext(ItemsContext);
-  function agregarProducto(dataAlbum) {
-    console.log(dataAlbum.id)
-    const itemExists = cartItems.find(item => item.id === dataAlbum.id);
+  const { cartItems, setCartItems, totalPrice, setTotalPrice } = useContext(ItemsContext);
+
+  const itemExists = cartItems.find(item => item.id === dataAlbum.id);
+
+  const actualizarCantidad = (item) => {
+    console.log(`Actualizando cantidad del producto ${dataAlbum.album}`);
+    const updatedItem = { ...item, cantidad: item.cantidad + 1 };
+    setTotalPrice(totalPrice + item.precio);
+    return updatedItem;
+  };
+  const agregarNuevoProducto = () => {
+    console.log(`Agregando nuevo producto ${dataAlbum.album} al carrito`);
+    const newItem = { id: dataAlbum.id, artista: dataAlbum.artista, album: dataAlbum.album, precio: dataAlbum.precio, img: dataAlbum.img, cantidad: 1 };
+    setCartItems([...cartItems, newItem]);
+    setTotalPrice(totalPrice + dataAlbum.precio);
+  };
+  const agregarProducto = () => {
     if (itemExists) {
-      // El producto ya está en el carrito, realiza la acción que desees
-      return;
+      console.log(`El producto ${dataAlbum.album} ya está en el carrito`);
+      const updatedItems = cartItems.map(item => (item.id === dataAlbum.id) ? actualizarCantidad(item) : item);
+      setCartItems(updatedItems);
+    } else {
+      agregarNuevoProducto();
     }
-    setCartItems([...cartItems, dataAlbum]);
-  }
+  };
   return (
     <div>
       <h1>Detalles de los álbums</h1>
