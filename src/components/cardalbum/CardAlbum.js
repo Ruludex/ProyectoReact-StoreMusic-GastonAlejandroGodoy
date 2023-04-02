@@ -18,9 +18,9 @@ const CardAlbum = ({ dataAlbum }) => {
           console.log(`Actualizando cantidad del producto ${dataAlbum.album}`);
           const updatedItem = { ...item, cantidad: item.cantidad + 1 };
           if (updatedItem.cantidad === 0) { // si la cantidad se reduce a 0, restar el precio del producto existente al precio total
-            setTotalPrice(totalPrice - itemExists.precio);
+            setTotalPrice(totalPrice * itemExists.cantidad);
           } else {
-            setTotalPrice(totalPrice + itemExists.precio);
+            setTotalPrice(totalPrice * itemExists.cantidad);
           }
           return updatedItem;
         } else {

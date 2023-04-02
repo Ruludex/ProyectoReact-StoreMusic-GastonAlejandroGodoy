@@ -29,6 +29,7 @@ function ModalItem(props) {
         <p>Artista: {artista}</p>
         <p>Precio: ${precio}</p>
         <p>Cantidad:{cantidad}</p>
+        <p>Subtotal: ${cantidad * precio}</p>
         <button
           onClick={() => eliminarProducto(id)}
           className="btn btn-danger"
@@ -48,7 +49,7 @@ const CardWidget = ({ dataAlbum }) => {
   function calcularTotal() {
     let total = 0;
     for (let i = 0; i < cartItems.length; i++) {
-      total += cartItems[i].precio;
+      total += cartItems[i].precio * cartItems[i].cantidad;
     }
     total += totalPrice;
     return total;
