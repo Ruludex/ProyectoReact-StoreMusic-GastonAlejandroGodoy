@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import "./Style.css";
@@ -20,8 +20,6 @@ function ModalItem(props) {
     setTotalPrice(prevTotal => prevTotal - itemToRemove.precio);
   }
   
-  
-
   return (
     <div className="modal-contenedor">
       <img className="img-carrito" src={img} alt={album} />
@@ -41,9 +39,8 @@ function ModalItem(props) {
   );
 }
 
-
 const CardWidget = () => {
-  const { cartItems } = useContext(ItemsContext);
+  const { cartItems, setCartItems } = useContext(ItemsContext);
   const [totalPrice] = useState(0);
 
   function calcularTotal() {
@@ -54,6 +51,7 @@ const CardWidget = () => {
     total += totalPrice;
     return total;
   }
+
   function items() {
     let total = 0;
     for (let i = 0; i < cartItems.length; i++) {
@@ -61,6 +59,19 @@ const CardWidget = () => {
     }
     return total;
   }
+
+  useEffect(() => {
+    // Load cartItems from localStorage
+    const cartItemsFromStorage = localStorage.getItem("cartItems");
+    if (cartItemsFromStorage) {
+      setCartItems(JSON.parse(cartItemsFromStorage));
+    }
+  }, [setCartItems]);
+
+  useEffect(() => {
+    // Save cartItems to localStorage
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
   
   
 
