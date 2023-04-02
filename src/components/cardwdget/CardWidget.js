@@ -3,16 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import "./Style.css";
 import { ItemsContext } from "../../ItemContext";
-import { Link } from "react-router-dom";
-
 
 function ModalItem(props) {
   const { id, img, artista, precio, album, cantidad } = props;
   const { cartItems, setCartItems, setTotalPrice } = useContext(ItemsContext);
-
-  function Comprar(){
-    <Link></Link>
-  }
 
   function eliminarProducto(id) {
     // Get the item that will be removed
