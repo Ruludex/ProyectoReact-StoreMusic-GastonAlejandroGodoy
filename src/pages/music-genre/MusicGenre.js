@@ -4,35 +4,37 @@ import { ItemsContext } from "../../ItemContext";
 import { Link } from "react-router-dom";
 import "./Style.css"
 
-const MusicGenre = ({dataAlbum}) => {
+const MusicGenre = (album) => {
   const { albumsData } = useContext(ItemsContext);
   const { genero } = useParams();
   const filteredAlbums = albumsData.filter(album => album.genero === genero);
   const { cartItems, setCartItems, totalPrice, setTotalPrice } = useContext(ItemsContext);
 
-  const itemExists = cartItems.find(item => item.id === dataAlbum.id);
-
   const actualizarCantidad = (item) => {
-    console.log(`Actualizando cantidad del producto ${dataAlbum.album}`);
+    console.log(`Actualizando cantidad del producto ${item.album}`);
     const updatedItem = { ...item, cantidad: item.cantidad + 1 };
     setTotalPrice(totalPrice + item.precio);
     return updatedItem;
   };
-  const agregarNuevoProducto = () => {
-    console.log(`Agregando nuevo producto ${dataAlbum.album} al carrito`);
-    const newItem = { id: dataAlbum.id, artista: dataAlbum.artista, album: dataAlbum.album, precio: dataAlbum.precio, img: dataAlbum.img, cantidad: 1 };
+  
+  const agregarNuevoProducto = (album) => {
+    console.log(`Agregando nuevo producto ${album.album} al carrito`);
+    const newItem = { id: album.id, artista: album.artista, album: album.album, precio: album.precio, img: album.img, cantidad: 1 };
     setCartItems([...cartItems, newItem]);
-    setTotalPrice(totalPrice + dataAlbum.precio);
+    setTotalPrice(totalPrice + album.precio);
   };
-  const agregarProducto = () => {
+  const agregarProducto = (album) => {
+    const itemExists = cartItems.find(item => item.id === album.id);
+  
     if (itemExists) {
-      console.log(`El producto ${dataAlbum.album} ya está en el carrito`);
-      const updatedItems = cartItems.map(item => (item.id === dataAlbum.id) ? actualizarCantidad(item) : item);
+      console.log(`El producto ${album.album} ya está en el carrito`);
+      const updatedItems = cartItems.map(item => (item.id === album.id) ? actualizarCantidad(item, album) : item);
       setCartItems(updatedItems);
     } else {
-      agregarNuevoProducto();
+      agregarNuevoProducto(album);
     }
   };
+  
   return (
     <div>
       <h1>Detalles de los álbums</h1>
@@ -50,13 +52,9 @@ const MusicGenre = ({dataAlbum}) => {
               <h3>Precio: {album.precio}</h3>
             </div>
           </Link>
-          <button
-          onClick={() => {
-            agregarProducto(album);
-          }}
-        >
-          Comprar
-        </button>
+          <button onClick={() => agregarProducto(album)}>
+            Comprar
+          </button>
         </div>
       </div>
         ))}
@@ -66,4 +64,5 @@ const MusicGenre = ({dataAlbum}) => {
 };
 
 export default MusicGenre;
+
 
