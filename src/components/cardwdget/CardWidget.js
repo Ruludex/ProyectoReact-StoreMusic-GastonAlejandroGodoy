@@ -6,7 +6,7 @@ import { ItemsContext } from "../../ItemContext";
 
 
 function ModalItem(props) {
-  const { id, img, artista, precio, album } = props;
+  const { id, img, artista, precio, album, cantidad } = props;
   const { cartItems, setCartItems, setTotalPrice } = useContext(ItemsContext);
 
   function eliminarProducto(id) {
@@ -20,6 +20,7 @@ function ModalItem(props) {
     setTotalPrice(prevTotal => prevTotal - itemToRemove.precio);
   }
   
+  
 
   return (
     <div className="modal-contenedor">
@@ -27,6 +28,7 @@ function ModalItem(props) {
       <div>
         <p>Artista: {artista}</p>
         <p>Precio: ${precio}</p>
+        <p>Cantidad:{cantidad}</p>
         <button
           onClick={() => eliminarProducto(id)}
           className="btn btn-danger"
@@ -51,6 +53,7 @@ const CardWidget = ({ dataAlbum }) => {
     total += totalPrice;
     return total;
   }
+  
   
 
   return (
