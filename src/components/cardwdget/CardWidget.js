@@ -42,7 +42,7 @@ function ModalItem(props) {
 }
 
 
-const CardWidget = ({ dataAlbum }) => {
+const CardWidget = () => {
   const { cartItems } = useContext(ItemsContext);
   const [totalPrice] = useState(0);
 
@@ -52,6 +52,13 @@ const CardWidget = ({ dataAlbum }) => {
       total += cartItems[i].precio * cartItems[i].cantidad;
     }
     total += totalPrice;
+    return total;
+  }
+  function items() {
+    let total = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+      total += cartItems[i].cantidad;
+    }
     return total;
   }
   
@@ -65,7 +72,7 @@ const CardWidget = ({ dataAlbum }) => {
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
       >
-        <span className="cart-count">{cartItems.length}</span>
+        <span className="cart-count">{items()}</span>
         <FontAwesomeIcon className="icon" icon={faCartShopping}></FontAwesomeIcon>
       </button>
 

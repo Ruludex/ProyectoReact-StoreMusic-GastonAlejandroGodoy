@@ -32,6 +32,8 @@ const CardAlbum = ({ dataAlbum }) => {
     }
   };
   
+  console.log("Renderizando CardAlbum");
+  
   return (
     <div className="caja">
       <div className="card">
@@ -52,4 +54,5 @@ const CardAlbum = ({ dataAlbum }) => {
 };
 
 export default CardAlbum;
+
 
