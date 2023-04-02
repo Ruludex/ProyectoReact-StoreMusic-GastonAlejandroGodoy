@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import "./Style.css";
@@ -41,14 +41,17 @@ function ModalItem(props) {
 
 const CardWidget = ({ dataAlbum }) => {
   const { cartItems } = useContext(ItemsContext);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   function calcularTotal() {
     let total = 0;
     for (let i = 0; i < cartItems.length; i++) {
       total += cartItems[i].precio;
     }
+    total += totalPrice;
     return total;
   }
+  
 
   return (
     <div className="container-modal">

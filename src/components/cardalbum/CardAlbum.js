@@ -13,7 +13,7 @@ const CardAlbum = ({ dataAlbum }) => {
       const updatedItems = cartItems.map(item => {
         if (item.id === dataAlbum.id) {
           console.log(item.cantidad );
-          const updatedItem = { ...item, cantidad: item.cantidad + 2 };
+          const updatedItem = { ...item, cantidad: item.cantidad + 1 };
           setTotalPrice(totalPrice + dataAlbum.precio);
           return updatedItem;
         } else {
@@ -26,9 +26,7 @@ const CardAlbum = ({ dataAlbum }) => {
       const newItem = { id: dataAlbum.id, artista: dataAlbum.artista, album: dataAlbum.album, precio: dataAlbum.precio, img: dataAlbum.img, cantidad: 1 };
       setCartItems([...cartItems, newItem]);
       setTotalPrice(totalPrice + dataAlbum.precio);
-    }
-      console.log("🚀 ~ file: CardAlbum.js:30 ~ agregarProducto ~ totalPrice:", totalPrice)
-  
+    }  
     // Si no hay elementos en el carrito, setear el precio total a 0
     if (cartItems.length === 0) {
       setTotalPrice(0);
