@@ -5,8 +5,10 @@ import { collection, query, getDocs } from "firebase/firestore";
 export const ItemsContext = createContext();
 
 export const ItemsProvider = ({ children }) => {
+  
   const [albumsData, setAlbumsData] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     const getAlbums = async () => {
@@ -22,7 +24,7 @@ export const ItemsProvider = ({ children }) => {
   }, []);
 
   return (
-    <ItemsContext.Provider value={{ albumsData, cartItems, setCartItems }}>
+    <ItemsContext.Provider value={{ albumsData, cartItems, setCartItems, totalPrice, setTotalPrice }}>
       {children}
     </ItemsContext.Provider>
   );
