@@ -55,6 +55,22 @@ const CardWidget = () => {
     }
     return total;
   }
+  function showBootstrapAlert(message, alertType) {
+    const alertClass = `alert-${alertType}`;
+    const alert = `
+      <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    `;
+    let alertContainer = document.querySelector("#alert-container");
+    if (!alertContainer) {
+      alertContainer = document.createElement("div");
+      alertContainer.id = "alert-container";
+      document.body.appendChild(alertContainer);
+    }
+    alertContainer.innerHTML = alert;
+  }
   async function handleSubmit() {
     try {
       const cartItemsFromStorage = localStorage.getItem("cartItems");
@@ -67,9 +83,9 @@ const CardWidget = () => {
       });
   
       const docRef = await addDoc(collection(db, "cartItems"), cartItemsObject);
-      console.log("Documento escrito con ID: ", docRef.id);
+      console.log("Documento escrito con IDs: ", docRef.id);
       const total = calcularTotalLocalStorage();
-      alert(`Gracias por su compra. El total fue de $${total}.`);
+      showBootstrapAlert(`Gracias por su compra. El total fue de $${total}, su codigo de seguimiento es ${docRef.id}`, "success");
     } catch (e) {
       console.error("Error al agregar el documento: ", e);
     }
@@ -158,6 +174,7 @@ const CardWidget = () => {
                 Salir
               </button>
               <button onClick={handleSubmit}>Comprar</button>
+              <div id="alert-container"></div>
 
             </div>
           </div>
