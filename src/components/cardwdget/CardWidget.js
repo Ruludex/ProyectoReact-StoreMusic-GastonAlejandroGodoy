@@ -11,13 +11,10 @@ function ModalItem(props) {
   const { cartItems, setCartItems, setTotalPrice } = useContext(ItemsContext);
 
   function eliminarProducto(id) {
-    // Get the item that will be removed
     const itemToRemove = cartItems.find(item => item.id === id);
   
-    // Remove the item from the cart
     setCartItems([...cartItems.filter((item) => item.id !== id)]);
   
-    // Update the total price
     setTotalPrice(prevTotal => prevTotal - itemToRemove.precio);
   }
   
@@ -76,7 +73,6 @@ const CardWidget = () => {
       const cartItemsFromStorage = localStorage.getItem("cartItems");
       const cartItems = JSON.parse(cartItemsFromStorage);
       
-      // Convert array to object
       const cartItemsObject = {};
       cartItems.forEach(item => {
         cartItemsObject[item.id] = item;
@@ -111,7 +107,6 @@ const CardWidget = () => {
   }
 
   useEffect(() => {
-    // Load cartItems from localStorage
     const cartItemsFromStorage = localStorage.getItem("cartItems");
     if (cartItemsFromStorage) {
       setCartItems(JSON.parse(cartItemsFromStorage));
@@ -119,7 +114,6 @@ const CardWidget = () => {
   }, [setCartItems]);
 
   useEffect(() => {
-    // Save cartItems to localStorage
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
   
