@@ -1,8 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import "./Style.css";
 import { ItemsContext } from "../../ItemContext";
+import { addDoc,collection } from "firebase/firestore";
+import { db } from "../../firebase/FirebaseConfig";
+import "./Style.css";
 
 function ModalItem(props) {
   const { id, img, artista, precio, album, cantidad } = props;
@@ -41,6 +43,39 @@ function ModalItem(props) {
 const CardWidget = () => {
   const { cartItems, setCartItems } = useContext(ItemsContext);
   const [totalPrice] = useState(0);
+
+  function calcularTotalLocalStorage() {
+    const cartItemsFromStorage = localStorage.getItem("cartItems");
+    let total = 0;
+    if (cartItemsFromStorage) {
+      const cartItems = JSON.parse(cartItemsFromStorage);
+      for (let i = 0; i < cartItems.length; i++) {
+        total += cartItems[i].precio * cartItems[i].cantidad;
+      }
+    }
+    return total;
+  }
+  async function handleSubmit() {
+    try {
+      const cartItemsFromStorage = localStorage.getItem("cartItems");
+      const cartItems = JSON.parse(cartItemsFromStorage);
+      
+      // Convert array to object
+      const cartItemsObject = {};
+      cartItems.forEach(item => {
+        cartItemsObject[item.id] = item;
+      });
+  
+      const docRef = await addDoc(collection(db, "cartItems"), cartItemsObject);
+      console.log("Documento escrito con ID: ", docRef.id);
+      const total = calcularTotalLocalStorage();
+      alert(`Gracias por su compra. El total fue de $${total}.`);
+    } catch (e) {
+      console.error("Error al agregar el documento: ", e);
+    }
+  }
+  
+  
 
   function calcularTotal() {
     let total = 0;
@@ -122,9 +157,8 @@ const CardWidget = () => {
               >
                 Salir
               </button>
-              <button type="button" className="btn btn-primary">
-                Comprar
-              </button>
+              <button onClick={handleSubmit}>Comprar</button>
+
             </div>
           </div>
         </div>
